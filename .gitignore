@@ -1,0 +1,22 @@
+# Node / Frontend
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+
+# Tauri / Rust
+src-tauri/target/
+src-tauri/Cargo.lock
+
+# Python / AI
+.venv/
+__pycache__/
+*.pyc
+models/
+pihu-v1/
+
+# IDE
+.idea/
+.vscode/
+*.swp
