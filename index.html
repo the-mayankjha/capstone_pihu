@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIHU</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+
+      <!-- Orb Viewport — full window, click-through transparent background -->
+      <div id="orb-container" data-tauri-drag-region>
+        <!--
+          OGL will use this canvas directly and manage its own size.
+          Initial size can be anything; it's resized via JS on DOMContentLoaded.
+        -->
+        <canvas id="orb-canvas"></canvas>
+
+        <!-- PIHU label — appears below orb during non-IDLE states -->
+        <div id="pihu-label">PIHU</div>
+
+        <!-- Slim status pill that shows current state -->
+        <div id="status-pill" class="status-pill">PIHU</div>
+      </div>
+
+      <!-- Dev / Debug Toggle Button -->
+      <button id="dev-toggle-btn" title="Toggle Debug Controls (Cmd+D)">⚙</button>
+
+      <!-- Dev / Debug Controls Modal Drawer -->
+      <div id="dev-panel" class="hidden">
+        <div class="dev-card">
+          <div class="dev-header">
+            <span>PIHU Dev Diagnostics</span>
+            <button id="dev-close-btn">&times;</button>
+          </div>
+
+          <div class="dev-section">
+            <label>Simulate Voice Command:</label>
+            <div class="dev-input-row">
+              <input type="text" id="dev-command-input" placeholder="e.g. What time is it?" />
+              <button id="dev-send-cmd-btn">Send</button>
+            </div>
+            <div class="dev-quick-cmds">
+              <button class="chip" data-cmd="What time is it?">What time is it?</button>
+              <button class="chip" data-cmd="What is today's date?">Today's date</button>
+              <button class="chip" data-cmd="Open GitHub">Open GitHub</button>
+              <button class="chip" data-cmd="Search for Rust Tauri">Search Rust</button>
+            </div>
+          </div>
+
+          <div class="dev-section">
+            <label>Force Runtime State:</label>
+            <div class="dev-state-grid">
+              <button class="state-btn" data-state="IDLE">IDLE</button>
+              <button class="state-btn" data-state="WAKE_DETECTED">WAKE</button>
+              <button class="state-btn" data-state="LISTENING">LISTENING</button>
+              <button class="state-btn" data-state="TRANSCRIBING">TRANSCRIBE</button>
+              <button class="state-btn" data-state="THINKING">THINKING</button>
+              <button class="state-btn" data-state="PLANNING">PLANNING</button>
+              <button class="state-btn" data-state="EXECUTING">EXECUTING</button>
+              <button class="state-btn" data-state="RESPONDING">RESPONDING</button>
+              <button class="state-btn danger" data-state="ERROR">ERROR</button>
+            </div>
+          </div>
+
+          <div class="dev-section">
+            <div class="dev-actions">
+              <button id="dev-wake-btn" class="action-btn">Trigger Wake ("Hey PIHU")</button>
+              <button id="dev-restart-py-btn" class="action-btn secondary">Restart Python</button>
+            </div>
+          </div>
+
+          <div class="dev-section log-section">
+            <label>Event Log:</label>
+            <div id="dev-log-container" class="log-stream"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
