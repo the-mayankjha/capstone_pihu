@@ -1,0 +1,70 @@
+# PIHU Configuration
+
+[system]
+debug_mode = true
+log_level = "INFO"
+
+[audio]
+sample_rate = 16000
+channels = 1
+chunk_size = 1280       # 80ms chunks at 16kHz
+input_device_index = -1 # -1 for default microphone
+
+[vad]
+model_path = "models/wakeUp/silero_vad.onnx"
+threshold = 0.5
+silence_timeout_ms = 1200
+min_speech_duration_ms = 250
+max_command_duration_ms = 8000
+
+# Wake Word Models Configuration
+# Each model has its own individual threshold and cooldown
+[wakeword]
+# General model
+[[wakeword.models]]
+name = "Gen-pihu"
+model_path = "models/wakeUp/Gen-pihu.onnx"
+data_path = "models/wakeUp/pihu(g).onnx.data"
+threshold = 0.5
+cooldown_ms = 2000
+enabled = true
+
+# Phrase-specific models
+[[wakeword.models]]
+name = "hey_pihu"
+model_path = "models/wakeUp/hey_pihu.onnx"
+data_path = "models/wakeUp/hey_pihu.onnx.data"
+threshold = 0.6
+cooldown_ms = 2000
+enabled = true
+
+[[wakeword.models]]
+name = "hi_pihu"
+model_path = "models/wakeUp/hi_pihu.onnx"
+data_path = "models/wakeUp/hi_pihu.onnx.data"
+threshold = 0.6
+cooldown_ms = 2000
+enabled = true
+
+[[wakeword.models]]
+name = "pihu"
+model_path = "models/wakeUp/pihu.onnx"
+data_path = "models/wakeUp/pihu.onnx.data"
+threshold = 0.6
+cooldown_ms = 2000
+enabled = true
+
+[stt]
+backend = "faster-whisper" # "faster-whisper" | "whisper" | "mock"
+model = "tiny.en"
+language = "en"
+beam_size = 1
+
+[tts]
+backend = "native" # "native" (macOS say) | "pyttsx3"
+voice = "Samantha"
+rate = 185
+
+[mcp]
+enabled = true
+allowed_tools = ["get_time", "get_date", "open_url", "open_application", "web_search"]
